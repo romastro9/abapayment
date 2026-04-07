@@ -10,7 +10,6 @@
       darkMode: 'class',
     }
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   
   <style>
@@ -92,12 +91,16 @@
         </div>
     </div>
 
-    <div class="space-y-4 relative z-10">
-        <input type="number" id="pay-amount" placeholder="0.00" class="w-full p-5 rounded-[1.5rem] border-2 border-slate-100 dark:border-slate-700 focus:border-[#003865] dark:focus:border-[#0ea5e9] focus:outline-none text-center font-bold text-2xl text-slate-800 dark:text-white transition-all bg-slate-50/50 dark:bg-slate-900/50">
-        <button onclick="confirmToTelegram()" class="w-full bg-[#003865] dark:bg-[#0ea5e9] text-white py-5 rounded-[1.5rem] font-extrabold shadow-[0_15px_30px_-10px_rgba(0,56,101,0.4)] dark:shadow-[0_15px_30px_-10px_rgba(14,165,233,0.3)] hover:bg-[#002a4d] dark:hover:bg-[#0284c7] transition-all flex flex-col items-center group active:scale-95">
-            <span id="text-btn-confirm" class="text-lg">Confirm & Send Image</span>
-            <span id="text-btn-sub" class="text-[10px] opacity-70 font-medium uppercase tracking-widest mt-1">Telegram Redirect</span>
-        </button>
+    <div class="relative z-10">
+        <div class="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-[1rem] mb-4 w-fit mx-auto transition-colors">
+          <button id="curr-usd" onclick="setCurrency('usd')" class="px-5 py-2 rounded-[0.8rem] bg-white dark:bg-slate-800 shadow-sm font-bold text-slate-800 dark:text-white transition-all text-sm">USD ($)</button>
+          <button id="curr-khr" onclick="setCurrency('khr')" class="px-5 py-2 rounded-[0.8rem] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold transition-all text-sm">KHR (៛)</button>
+        </div>
+        
+        <div class="relative">
+          <span id="currency-symbol" class="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-bold text-slate-400 dark:text-slate-500 transition-colors">$</span>
+          <input type="number" id="pay-amount" placeholder="0.00" class="w-full pl-12 pr-6 py-5 rounded-[1.5rem] border-2 border-slate-100 dark:border-slate-700 focus:border-[#003865] dark:focus:border-[#0ea5e9] focus:outline-none text-right font-bold text-2xl text-slate-800 dark:text-white transition-all bg-slate-50/50 dark:bg-slate-900/50">
+        </div>
     </div>
 
     <footer class="mt-12 relative z-10">
@@ -115,24 +118,46 @@
       document.getElementById('theme-icon').innerText = isDark ? '☀️' : '🌙';
     }
 
+    // Currency Toggle Logic
+    function setCurrency(curr) {
+      const btnUsd = document.getElementById('curr-usd');
+      const btnKhr = document.getElementById('curr-khr');
+      const sym = document.getElementById('currency-symbol');
+      const input = document.getElementById('pay-amount');
+
+      if (curr === 'usd') {
+        // Active USD
+        btnUsd.className = "px-5 py-2 rounded-[0.8rem] bg-white dark:bg-slate-800 shadow-sm font-bold text-slate-800 dark:text-white transition-all text-sm";
+        btnKhr.className = "px-5 py-2 rounded-[0.8rem] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold transition-all text-sm";
+        sym.innerText = "$";
+        input.placeholder = "0.00";
+      } else {
+        // Active KHR
+        btnKhr.className = "px-5 py-2 rounded-[0.8rem] bg-white dark:bg-slate-800 shadow-sm font-bold text-slate-800 dark:text-white transition-all text-sm";
+        btnUsd.className = "px-5 py-2 rounded-[0.8rem] text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-bold transition-all text-sm";
+        sym.innerText = "៛";
+        input.placeholder = "0";
+      }
+    }
+
     const translations = {
       kh: {
         thank: "ការបង់ប្រាក់គាំទ្រ", desc: "សូមអរគុណសម្រាប់ការជឿទុកចិត្ត និងការគាំទ្ររបស់អ្នក។",
         accNameLabel: "ឈ្មោះគណនី", accLabel: "លេខគណនី", btnPay: "ចុចទីនេះដើម្បីបង់ប្រាក់តាម App",
         noteDesc: "សូមផ្ញើរូបភាព Screenshot មកកាន់ Telegram បន្ទាប់ពីបង់រួច។",
-        placeholder: "0.00", btnConfirm: "បញ្ជាក់ការបង់ប្រាក់", btnSub: "ឆាតទៅកាន់ Telegram", copyMsg: "ចម្លងលេខគណនីរួចរាល់៖ "
+        copyMsg: "ចម្លងលេខគណនីរួចរាល់៖ "
       },
       en: {
         thank: "Payment Support", desc: "Thank you for your generosity and trust.",
         accNameLabel: "Account Name", accLabel: "Account Number", btnPay: "Tap here to Pay via App",
         noteDesc: "Please send screenshot via Telegram after payment.",
-        placeholder: "0.00", btnConfirm: "Confirm & Send Image", btnSub: "Telegram Redirect", copyMsg: "Account Copied: "
+        copyMsg: "Account Copied: "
       },
       cn: {
         thank: "支持支付", desc: "感谢您的慷慨和信任。",
         accNameLabel: "账户名称", accLabel: "账号", btnPay: "点击此处通过 App 支付",
         noteDesc: "付款后请通过 Telegram 发送截图。",
-        placeholder: "0.00", btnConfirm: "确认并发送图片", btnSub: "跳转至 Telegram", copyMsg: "账号已复制： "
+        copyMsg: "账号已复制： "
       }
     };
 
@@ -145,33 +170,12 @@
       document.getElementById('text-acc-label').innerText = t.accLabel;
       document.getElementById('text-btn-pay').innerText = t.btnPay;
       document.getElementById('text-note-desc').innerText = t.noteDesc;
-      document.getElementById('pay-amount').placeholder = t.placeholder;
-      document.getElementById('text-btn-confirm').innerText = t.btnConfirm;
-      document.getElementById('text-btn-sub').innerText = t.btnSub;
     }
 
     function copyAccount() {
       const acc = document.getElementById('acc-number').innerText;
       navigator.clipboard.writeText(acc);
       alert(translations[currentLang].copyMsg + acc);
-    }
-
-    // Confetti and Telegram redirect for ABA
-    function confirmToTelegram() {
-      const amount = document.getElementById('pay-amount').value;
-      if(!amount) { alert('Please enter amount!'); return; }
-      
-      confetti({
-        particleCount: 150, 
-        spread: 80,         
-        origin: { y: 0.6 }, 
-        colors: ['#003865', '#df1919', '#ffffff', '#fbbf24', '#0ea5e9']
-      });
-
-      setTimeout(() => {
-        const msg = `I got paid ${amount}$ via ABA Bank. (Screenshot attached below)`;
-        window.open(`https://t.me/Romastro9?text=${encodeURIComponent(msg)}`, '_blank');
-      }, 1500); 
     }
   </script>
 </body>
