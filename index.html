@@ -19,12 +19,11 @@
     /* Dark Mode Glass */
     .dark .glass { background: rgba(30, 41, 59, 0.85); border-color: rgba(255, 255, 255, 0.05); }
     
-    .bank-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; border: 2px solid transparent; }
+    .bank-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .bank-card:hover { transform: translateY(-8px); }
     
-    /* Light Mode Active Card */
+    /* Static Active Card Styles for Single Bank */
     .bank-card.active { border-color: #003865; background: #f0f7ff; box-shadow: 0 20px 25px -5px rgba(0, 56, 101, 0.1); }
-    /* Dark Mode Active Card */
     .dark .bank-card.active { border-color: #38bdf8; background: rgba(15, 23, 42, 0.6); box-shadow: 0 20px 25px -5px rgba(56, 189, 248, 0.1); }
     
     .animate-in { animation: fadeIn 0.6s ease-out; }
@@ -55,18 +54,14 @@
         <p id="text-desc" class="text-slate-500 dark:text-slate-400 text-sm font-medium transition-colors">Thank you for your generosity and trust.</p>
     </header>
 
-    <div class="grid grid-cols-2 gap-5 mb-8 relative z-10">
-      <div onclick="selectBank('aba', 'MOUNG PHEAROM', '004 622 379', 'https://pay.ababank.com/oRF8/yne8y5ps')" id="btn-aba" class="bank-card p-4 rounded-[2rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex flex-col items-center shadow-sm">
+    <div class="flex justify-center mb-8 relative z-10">
+      <div id="btn-aba" class="bank-card active w-full max-w-[200px] p-4 rounded-[2rem] border-2 flex flex-col items-center shadow-sm">
         <div class="bg-white p-1 rounded-lg mb-2"><img src="aba-logo.png" class="h-6 object-contain" alt="ABA Logo"></div>
-        <span class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">ABA Bank</span>
-      </div>
-      <div onclick="selectBank('acleda', 'MOUNG PHEAROM', '012 345 678', 'https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfu5ckLzMHjaSki6Ru0bsOyNK+ylPBgZ0sHH6BeGUscKoExA/tlrvrbeFx2bljlrhcaSIGyxQ8jKO7Qo+vLKjjAF4TpXU7jOuebXNKBcaj3cAxRdsZbZ/Ct6kpqJ+J0mcTS6xK5JJyKQfs6xRlr2zhWPiU9I5pKIWk7YF0/msgZ0Go1ZHfLeBgSqSo1R9cTNuCDfCwqE/Iz896qcvM+vSRH8T0Tx2UNRgS7Y4EH+rrpdyP&key=khqr')" id="btn-acleda" class="bank-card p-4 rounded-[2rem] bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex flex-col items-center shadow-sm">
-        <div class="bg-white p-1 rounded-lg mb-2"><img src="acleda-logo.png" class="h-6 object-contain" alt="ACLEDA Logo"></div>
-        <span class="text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest">Acleda</span>
+        <span class="text-[10px] font-black text-slate-500 dark:text-slate-300 uppercase tracking-widest">ABA Bank</span>
       </div>
     </div>
 
-    <a id="pay-link-btn" href="#" target="_blank" class="relative z-10 w-full flex items-center justify-center gap-2 bg-[#df1919] text-white py-4 rounded-[1.5rem] font-extrabold shadow-[0_10px_20px_-10px_rgba(223,25,25,0.5)] hover:bg-[#b81515] hover:-translate-y-1 transition-all mb-8">
+    <a id="pay-link-btn" href="https://pay.ababank.com/oRF8/yne8y5ps" target="_blank" class="relative z-10 w-full flex items-center justify-center gap-2 bg-[#005c8a] text-white py-4 rounded-[1.5rem] font-extrabold shadow-[0_10px_20px_-10px_rgba(0,92,138,0.5)] hover:bg-[#004263] hover:-translate-y-1 transition-all mb-8">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
       <span id="text-btn-pay">Tap here to Pay via App</span>
     </a>
@@ -90,7 +85,7 @@
 
     <div class="mb-10 relative inline-block z-10 w-full">
         <div class="p-4 bg-white rounded-[2.5rem] shadow-xl border border-slate-50 dark:border-slate-600 mx-auto inline-block transition-colors">
-            <img id="qr-image" src="aba-usd.png" alt="QR Code" class="w-full max-w-[200px] mx-auto rounded-2xl" />
+            <img id="qr-image" src="aba-usd.png" alt="ABA QR Code" class="w-full max-w-[200px] mx-auto rounded-2xl" />
         </div>
         <div class="mt-6 bg-amber-50 dark:bg-amber-900/30 px-4 py-3 rounded-2xl border border-amber-100 dark:border-amber-700/50 transition-colors">
             <p id="text-note-desc" class="text-[11px] text-amber-700 dark:text-amber-400 font-semibold italic uppercase tracking-tight">Please send screenshot via Telegram after payment.</p>
@@ -111,10 +106,9 @@
   </div>
 
   <script>
-    let currentBank = 'aba';
     let currentLang = 'en';
 
-    // មុខងារ Dark Mode Toggle
+    // Dark Mode Toggle
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
       const isDark = document.documentElement.classList.contains('dark');
@@ -156,52 +150,29 @@
       document.getElementById('text-btn-sub').innerText = t.btnSub;
     }
 
-    function selectBank(bank, accName, accNum, payLink) {
-      currentBank = bank;
-      
-      document.getElementById('acc-name').innerText = accName;
-      document.getElementById('acc-number').innerText = accNum;
-      document.getElementById('pay-link-btn').href = payLink;
-
-      if(bank === 'aba') {
-        document.getElementById('pay-link-btn').className = "relative z-10 w-full flex items-center justify-center gap-2 bg-[#005c8a] text-white py-4 rounded-[1.5rem] font-extrabold shadow-[0_10px_20px_-10px_rgba(0,92,138,0.5)] hover:bg-[#004263] hover:-translate-y-1 transition-all mb-8";
-      } else {
-        document.getElementById('pay-link-btn').className = "relative z-10 w-full flex items-center justify-center gap-2 bg-[#0f4a86] text-white py-4 rounded-[1.5rem] font-extrabold shadow-[0_10px_20px_-10px_rgba(15,74,134,0.5)] hover:bg-[#0a335e] hover:-translate-y-1 transition-all mb-8";
-      }
-
-      document.querySelectorAll('.bank-card').forEach(c => c.classList.remove('active'));
-      document.getElementById('btn-' + bank).classList.add('active');
-      
-      document.getElementById('qr-image').src = `${currentBank}-usd.png`;
-    }
-
     function copyAccount() {
       const acc = document.getElementById('acc-number').innerText;
       navigator.clipboard.writeText(acc);
       alert(translations[currentLang].copyMsg + acc);
     }
 
-    // មុខងារនេះបញ្ចូលគ្នារវាងការបាចផ្កា (Confetti) និងការផ្ញើទៅ Telegram
+    // Confetti and Telegram redirect for ABA
     function confirmToTelegram() {
       const amount = document.getElementById('pay-amount').value;
       if(!amount) { alert('Please enter amount!'); return; }
       
-      // ១. លោត Animation បាចផ្កា
       confetti({
-        particleCount: 150, // ចំនួនផ្កា
-        spread: 80,         // ទំហំសាយភាយ
-        origin: { y: 0.6 }, // ទីតាំងបាញ់ចេញ
+        particleCount: 150, 
+        spread: 80,         
+        origin: { y: 0.6 }, 
         colors: ['#003865', '#df1919', '#ffffff', '#fbbf24', '#0ea5e9']
       });
 
-      // ២. ពន្យារពេល ១.៥ វិនាទី (ឱ្យគេមើលផ្កាសិន) រួចទើបលោតទៅ Telegram
       setTimeout(() => {
-        const msg = `I got paid ${amount}$ via ${currentBank.toUpperCase()} Bank. (Screenshot attached below)`;
+        const msg = `I got paid ${amount}$ via ABA Bank. (Screenshot attached below)`;
         window.open(`https://t.me/Romastro9?text=${encodeURIComponent(msg)}`, '_blank');
       }, 1500); 
     }
-
-    selectBank('aba', 'MOUNG PHEAROM', '004 622 379', 'https://pay.ababank.com/oRF8/yne8y5ps');
   </script>
 </body>
 </html>
