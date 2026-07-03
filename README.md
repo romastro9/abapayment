@@ -1,17 +1,18 @@
-# ABA Payment Page
+# Digi-Tech Store ABA Payment Page
 
-Clean static ABA payment support page for Moung Phearom.
+Clean static ABA payment page for Digi-Tech Store.
 
 ## What changed
 
-- Redesigned the page into a modern two-panel layout.
-- Removed unused amount and currency input because it did not connect to the ABA payment URL.
-- Removed the extra Chinese language option to keep the page focused on Khmer and English.
-- Removed Tailwind CDN dependency and replaced it with clean custom CSS.
-- Added responsive mobile layout.
-- Added copy-account button with a toast notification.
-- Added light/dark mode with saved preference.
-- Improved Khmer font support with Kantumruy Pro.
+- Updated the page name and branding to Digi-Tech Store.
+- Updated the main Khmer thank-you message.
+- Updated the payment instruction text to point users to the QR code below.
+- Removed the old three-step cards.
+- Added a Download QR Code button.
+- Improved flexible smartphone sizing with responsive spacing and QR sizing.
+- Removed the separate copy-number button.
+- Added click-to-copy directly on the ABA account number.
+- Kept Khmer/English language switch and light/dark mode.
 
 ## Files
 
@@ -21,7 +22,8 @@ Clean static ABA payment support page for Moung Phearom.
 
 ## Payment information
 
-- Account name: `MOUNG PHEAROM`
+- Store name: `Digi-Tech Store`
+- Account name: `DIGI-TECH STORE`
 - Account number: `004 622 379`
 - ABA payment link: `https://pay.ababank.com/oRF8/yne8y5ps`
 
