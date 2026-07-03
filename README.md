@@ -1,10 +1,11 @@
-# Digi-Tech Store ABA Payment Page
+# DigiTech Store ABA Payment Page
 
-Clean static ABA payment page for Digi-Tech Store.
+Clean static ABA payment page for DigiTech Store.
 
 ## What changed
 
-- Updated the page name and branding to Digi-Tech Store.
+- Updated the page name and branding to DigiTech Store.
+- Added a DigiTech-style logo mark and wordmark in the page header.
 - Updated the main Khmer thank-you message.
 - Updated the payment instruction text to point users to the QR code below.
 - Removed the old three-step cards.
@@ -22,7 +23,7 @@ Clean static ABA payment page for Digi-Tech Store.
 
 ## Payment information
 
-- Store name: `Digi-Tech Store`
+- Store name: `DigiTech Store`
 - Account name: `DIGI-TECH STORE`
 - Account number: `004 622 379`
 - ABA payment link: `https://pay.ababank.com/oRF8/yne8y5ps`
